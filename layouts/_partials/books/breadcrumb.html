@@ -1,0 +1,12 @@
+{{/* layouts/partials/books/breadcrumb.html */}}
+<div class="container bg-light p-3 rounded-3 shadow-sm mb-3">
+  <nav class="small text-muted">
+    {{ range .GetTerms "library" -}}
+      <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+    {{- end }}
+    <span aria-hidden="true"> › </span>
+    {{ range .GetTerms "series" -}}
+      <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+    {{- end }}
+  </nav>
+</div>

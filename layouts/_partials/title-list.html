@@ -1,0 +1,20 @@
+{{- $pages := site.RegularPages -}}
+
+{{- $section := .section -}}
+{{- if $section -}}
+    {{- $pages = where $pages "Section" $section -}}
+{{- end -}}
+
+{{- $params := .params -}}
+{{- if $params -}}
+    {{- range $key, $value := $params -}}
+        {{- $pages = where $pages (printf "Params.%s" $key) $value -}}
+    {{- end -}}
+{{- end -}}
+
+{{- $limit := .limit | default 10 -}}
+{{/*  {{- $pages = first $limit $pages -}}  */}}
+
+{{ if $pages }}
+  {{ partial "homepage/section.html" (dict "Title" .Title "Link" .Link "Items" $pages) }}
+{{ end }}

@@ -63,7 +63,7 @@
 {{- /* If it is part of a series, link to related articles */}}
 {{- $permalink := .Permalink }}
 {{- $siteSeries := .Site.Taxonomies.series }}
-{{ with .Params.series }}
+{{/*  {{ with .Params.series }}
   {{- range $name := . }}
     {{- $series := index $siteSeries ($name | urlize) }}
     {{- range $page := first 6 $series.Pages }}
@@ -72,4 +72,4 @@
       {{ end }}
     {{- end }}
   {{ end }}
-{{ end }}
+{{ end }}  */}}

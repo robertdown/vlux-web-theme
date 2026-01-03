@@ -1,0 +1,13 @@
+<section class="bg-light py-5" aria-label="Featured series">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-end mb-4">
+            <h2 class="display-2 m-0">{{ .Title }}</h2>
+            <a class="link-dark" href="{{ .Link }}">View all {{ .Title }} →</a>
+        </div>
+        <div class="row g-4">
+        {{ range .Items }}
+            {{ partial "books/card.html" . }}
+        {{ end }}
+        </div>
+    </div>
+</section>

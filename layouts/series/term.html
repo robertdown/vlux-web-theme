@@ -1,0 +1,28 @@
+{{ define "main" }}
+    <h1>{{ .Title }}</h1>
+    
+    {{/* Collect distinct parent library terms from the books in this series */}}
+    {{ $libs := slice }}
+    {{ range where .Pages "Section" "books" }}
+      {{ range .GetTerms "library" }}
+        {{ $libs = $libs | append . }}
+      {{ end }}
+    {{ end }}
+    {{ $libs = uniq $libs }}
+
+    {{ if gt (len $libs) 0 }}
+      <p class="text-muted">
+        Part of:
+        {{ range $i, $lib := $libs }}
+          {{ if $i }}, {{ end }}<a href="{{ $lib.RelPermalink }}">{{ $lib.Title }}</a>
+        {{ end }}
+      </p>
+    {{ end }}
+    <ul class="list-unstyled">
+      {{ range sort (where .Pages "Section" "books") "Params.publishDate" "desc" }}
+        <li class="mb-2"><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+      {{ else }}
+        <li>No books in this series yet.</li>
+      {{ end }}
+    </ul>
+{{ end }}

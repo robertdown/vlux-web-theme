@@ -1,0 +1,9 @@
+{{- define "main" -}}
+<section class="container py-5">
+  <article class="prose measure-65 prose--cols">
+    <h1>{{ .Title -}}</h1>
+    {{- with .Params.city -}}<small class="text-muted text-inline">{{- . -}},&nbsp;</small>{{- end -}}
+    {{- with .Params.date -}}<small class="text-muted text-inline">{{- . | dateFormat "January 2, 2006" -}}. </small>{{- end -}}
+    {{- .Content -}}
+  </article>
+{{- end -}}

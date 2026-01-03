@@ -1,0 +1,42 @@
+{{ define "main" }}
+<a class="visually-hidden-focusable position-absolute top-0 start-0 m-2" href="#main">Skip to content</a>
+
+<!-- HERO -->
+<section class="container my-3 p-5 shadow-sm rounded-3" aria-label="Hero">
+  {{ partial "content/carousel.html" (dict "context" . "imagesPattern" "books/*/cover*" "aspectRatio" "8/3" "withIndicators" true "withControls" true "crossFade" true) }}
+</section>
+
+<main id="main" tabindex="-1">
+{{ $series := site.Data.series.featured }}
+{{ if $series }}
+  {{ partial "homepage/section.html" (dict "Title" "Featured Series" "Link" "/series/" "Items" $series) }}
+{{ end }}
+
+<!-- FEATURED TITLES -->
+{{ partial "title-list.html" (dict "Title" "Featured Titles" "section" "books" "params" (dict "featured" true) "Link" "/books/") }}
+
+<!-- NEW RELEASES -->
+{{ $newReleases := where (where site.RegularPages "Section" "books") ".Params.tags" "intersect" (slice "new") }}
+{{ if $newReleases }}
+  {{ partial "homepage/section.html" (dict "Title" "New Releases" "Link" "/books/" "Items" $newReleases) }}
+{{ end }}
+
+<!-- BESTSELLERS -->
+{{ $bestsellers := where (where site.RegularPages "Section" "books") ".Params.tags" "intersect" (slice "bestseller") }}
+{{ if $bestsellers }}
+  {{ partial "homepage/section.html" (dict "Title" "Bestsellers" "Link" "/books/" "Items" $bestsellers) }}
+{{ end }}
+
+<!-- VLUX CTA --->
+<section class="py-5 bg-body">
+  <div class="container">
+    <div class="row g-4 align-items-center">
+      <div class="col-12 col-lg-8 col-lg-offset-2">
+        {{ partial "vlux-newsletter-cta.html" . }}
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<!-- /main -->
+{{ end }}

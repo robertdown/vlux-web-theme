@@ -1,16 +1,86 @@
 // Default variable overrides
 
-// scss-docs-start theme-color-variables
-$primary:       #0d6efd;
-$secondary:     #6c757d;
-$success:       #198754;
-$info:          #0dcaf0;
-$warning:       #ffc107;
-$danger:        #dc3545;
-$light:         #f8f9fa;
-$dark:          #212529;
-// scss-docs-end theme-color-variables
+// ================================
+// Verilux Brand Bootstrap Overrides
+// ================================
+
+// Verilux Brand
+$v-navy:     #001f3f; // Verliux Navy (dark, Oxford-inspired)
+$v-charcoal: #555555; // Charcoal gray
+$v-ivory:    #fdfcf7; // Ivory / cream paper tone
+$v-gold:     #b48a00; // Golden undertone (for highlights)
+
+// ---- Color Palette ----
+$primary:   $v-navy; // Verilux Navy (deep, Oxford-inspired)
+$secondary: $v-charcoal; // Charcoal gray
+$light:     $v-ivory; // Ivory / cream paper tone
+$dark:      #222222; // Deep neutral for text
+
+// Accents (optional refinement)
+$info:      #4a6fa5; // Muted academic blue
+$success:   #3c6e47; // Legal-green accent
+$warning:   #b48a00; // Golden undertone (for highlights)
+$danger:    #8c2f39; // Reserved burgundy
+
+// ---- Typography ----
+// Body font → Garamond Premier Pro or fallback EB Garamond
+$font-family-base: "Libre Franklin", Arial, sans-serif;
+// Headings → Bembo Titling or fallback system serif
+$headings-font-family: "arno-pro", "EB Garamond", serif;
+// Sans for UI elements (web menus, buttons, etc.)
+$font-family-sans-serif: "Libre Franklin", "Helvetica Neue", Arial, sans-serif;
+$font-family-serif: "arno-pro", "EB Garamond", serif;
+:root {
+    --bs-font-serif: "arno-pro", "EB Garamond", serif;
+    --vp-navy: #{$v-navy};
+    --vp-charcoal: #{$v-charcoal};
+    --vp-gold: #{$v-gold};
+    --vp-ivory: #{$light};
+
+}
+
+// Sizing / line-height tuned to 13pt baseline
+$font-size-base: 1rem;        // ≈ 16px
+$line-height-base: 1.625;     // ~13pt grid when scaled
+
+// ---- Component Radius & Borders ----
+$border-radius: 0;            // Square for restrained elegance
+$btn-border-radius: 0.25rem;  // Slight easing for touch targets
+$card-border-radius: 0;       // Keep reference-book austerity
+
+// ---- Links ----
+$link-color: $primary;
+$link-hover-color: darken($primary, 10%);
+
+// ---- Navbar ----
+$navbar-light-color: $dark;
+$navbar-light-bg: $light;
+$navbar-dark-color: $light;
+$navbar-dark-bg: $primary;
 
 // Your variable overrides
-$body-bg: #fff;
-$body-color: #212529;
+$body-bg: $v-ivory;
+$body-color: $v-charcoal;
+
+// ================================
+// Verilux Typography Overrides
+// ================================
+
+// Base sizing tuned for ~16px text on a 13pt baseline grid
+$font-size-base: 1.125rem;        // 16px
+$line-height-base: 1.5;     // 16px * 1.625 ≈ 26px (~13pt * 2)
+
+// Scale for headings (restrained, scholarly)
+$h1-font-size: 2.25rem;       // ~36px
+$h2-font-size: 1.75rem;       // ~28px
+$h3-font-size: 1.5rem;        // ~24px
+$h4-font-size: 1.25rem;       // ~20px
+$h5-font-size: 1.125rem;      // ~18px
+$h6-font-size: 1rem;          // 16px (same as body, small caps recommended)
+
+// Small text
+$small-font-size: 0.875rem;   // ~14px
+
+// Lead (intro paragraphs, e.g. prefaces)
+$lead-font-size: 1.25rem;     // ~20px
+$lead-font-weight: 400;       // keep elegant, not bold

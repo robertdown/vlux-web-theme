@@ -1,0 +1,64 @@
+{{ if .Site.Params.alert -}}
+{{ partial "header/alert.html" . }}
+{{ end -}}
+
+{{- /* Verilux header: 2 containers (brand bar + navbar) — Bootstrap 5 */ -}}
+<header class="main-header container pt-3" role="banner">
+
+  <!-- Container 1: Brand (block) -->
+  <div class="bg-primary rounded-3 mt-3 px-5 py-4 shadow-sm d-flex align-items-center justify-content-between flex-row">
+    <a class="text-decoration-none" href="{{ "/" | relLangURL }}">
+      {{ with .Site.Params.logo }}
+        <picture>
+          <!-- Light first -->
+          <source srcset="{{ .src | absURL }}" media="(prefers-color-scheme: light)">
+          <!-- dark mode version -->
+          <source srcset="{{ .src_dark | absURL }}" media="(prefers-color-scheme: dark)">
+          <!-- default light version -->
+          <img src="{{ .src | absURL }}" alt="{{ .alt | default $.Site.Title }}" height="{{ .height | default 50 }}" class="align-text-bottom">
+        </picture>
+      {{ else }}
+        <span class="">{{ $.Site.Title }}</span>
+      {{ end }}
+    </a>
+    <div id="nav-bar">
+      <nav class="navbar navbar-expand-lg navbar-dark px-0" aria-label="Primary navigation">
+
+        <!-- Toggler lives in the nav container (brand is above) -->
+        <button class="navbar-toggler border-0 ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#primaryNav" aria-controls="primaryNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="primaryNav">
+          <!-- Main menu -->
+          <ul class="navbar-nav me-auto">
+            {{ $current := . }}
+            {{ with .Site.Menus.main }}
+              {{ range . }}
+                {{ $active := or ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) }}
+                {{ if .HasChildren }}
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white {{ if $active }}active{{ end }}" href="#" id="menu-{{ .Identifier }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      {{ .Name }}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="menu-{{ .Identifier }}">
+                      {{ range .Children }}
+                        <li>
+                          <a class="dropdown-item {{ if (or ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .)) }}active{{ end }}" href="{{ .URL }}">{{ .Name }}</a>
+                        </li>
+                      {{ end }}
+                    </ul>
+                  </li>
+                {{ else }}
+                  <li class="nav-item">
+                    <a class="nav-link text-white {{ if $active }}active{{ end }}" href="{{ .URL }}">{{ .Name }}</a>
+                  </li>
+                {{ end }}
+              {{ end }}
+            {{ end }}
+          </ul>
+        </div>
+      </nav>
+    </div>
+</header>
+

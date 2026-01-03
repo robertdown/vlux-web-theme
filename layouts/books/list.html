@@ -1,0 +1,34 @@
+{{- define "main" -}}
+<h1>Books</h1>
+{{ .Content }}
+
+{{ if or .Site.Params.options.listCategoryFilter .Site.Params.options.listTagFilter }}
+<div class="row mb-3">
+
+    {{ if .Site.Params.options.listCategoryFilter }}
+        <div class="col-auto">
+            <svg xmlns="http://www.w3.org/2000/svg" class="feather me-2"><use href="{{ `images/feather/feather-sprite.svg#folder` | relURL }}"/></svg>
+            {{range ($.Site.GetPage "taxonomyTerm" "categories").Pages.ByTitle }}
+                <a class="badge text-bg-light nav-link" href="{{.RelPermalink}}">{{.Title}}</a>&nbsp;
+            {{end}}
+        </div>
+    {{ end }}
+
+    {{ if .Site.Params.options.listTagFilter }}
+        <div class="col-auto">
+            <svg xmlns="http://www.w3.org/2000/svg" class="feather me-2"><use href="{{ `images/feather/feather-sprite.svg#tag` | relURL }}"/></svg>
+            {{range ($.Site.GetPage "taxonomyTerm" "tags").Pages.ByTitle }}
+                <a class="badge text-bg-light nav-link" href="{{.RelPermalink}}">{{.Title}}</a>&nbsp;
+            {{end}}
+        </div>
+    {{ end }}
+</div>
+{{ end }}
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+{{ range .Pages }}
+        <div class="col">{{ partial "books/card.html" . }}</div>
+{{ end }}
+</div>
+
+{{- end -}}

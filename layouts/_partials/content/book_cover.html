@@ -1,0 +1,9 @@
+{{ with .Resources.GetMatch "cover*" }}
+    <img src="{{ .RelPermalink }}" class="img-fluid" alt="{{ $.Title }}">
+{{ else }}
+    {{ with .Params.image }}
+        <img src="{{ . }}" class="img-fluid" alt="{{ $.Title }}">
+    {{ else }}
+        <div class="ratio ratio-2x3 bg-light d-flex align-items-center justify-content-center">No cover</div>
+    {{ end }}
+{{ end }}

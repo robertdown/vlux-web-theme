@@ -1,0 +1,15 @@
+{{ define "main" }}
+  <h1>{{ .Title }}</h1>
+  {{ .Content }}
+
+  {{/* Pages attached to this term */}}
+  {{ $pages := where .Pages "Section" "books" }}
+
+  <ul>
+    {{ range sort $pages "Params.publishDate" "desc" }}
+      <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+    {{ else }}
+      <li>No books in this library yet.</li>
+    {{ end }}
+  </ul>
+{{ end }}

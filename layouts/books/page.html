@@ -1,0 +1,40 @@
+{{ define "main" }}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-3">
+            {{ partial "content/book_cover.html" . }}
+        </div>
+        <div class="col-12 col-md-9">
+            <h1>{{ .Title }}</h1>
+            <h2 class="text-secondary">{{ .Params.Subtitle }}</h2>
+            <p>Part of the {{ range .GetTerms "series" }} <a href="{{ .RelPermalink }}">{{ .Title }}</a> {{ end }} in the {{ range .GetTerms "library" }} <a href="{{ .RelPermalink }}">{{ .Title }}</a> {{ end }} </p>
+            <div class="d-flex justify-content-start align-items-stretch gap-3">
+                <div class="card bg-light grow-1">
+                    <div class="card-body">
+                        {{ .Params.meta.pages }} page {{ .Params.meta.type }}, published {{ .Params.meta.published }}<br>
+                        <strong>ISBN:</strong>&nbsp;{{ .Params.meta.isbn}}<br>
+                        <strong>LCCN:</strong>&nbsp;{{ .Params.meta.lccn}}
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        {{ with .Params.distribution }}
+                            <h2 class="mb-4">Where to buy</h2>
+                            <ul class="list-unstyled d-flex flex-wrap">
+                            {{ range . }}
+                                <li><a href="{{ .slug | absURL }}" class="btn btn-primary mx-3">{{ .vendor }}</a></li>
+                            {{ end }}
+                        {{ end }}
+                    </div>
+                </div>
+            </div>
+            <article class="mt-5">
+                {{ .Content}}
+            </article>
+        </div>
+    </div>
+
+</div>
+
+{{ end }}

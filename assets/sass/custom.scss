@@ -1,3 +1,36 @@
+/* Custom CSS vars */
+:root{
+  --measure: 65ch;
+  --measure-narrow: 58ch;
+
+  --col-width: 45ch;
+  --col-gap: 2rem;
+
+  --leading: 1.45;
+  --leading-narrow: 1.55;
+  --leading-cols: 1.35;
+  --indent: 1.5em;
+}
+
+/* Optional: add bespoke utilities */
+$utilities: map-merge(
+  $utilities,
+  (
+    "measure": (
+      property: max-inline-size,
+      class: measure,
+      values: (
+        default: var(--measure),
+        narrow: var(--measure-narrow),
+        55: 55ch,
+        60: 60ch,
+        65: 65ch,
+        70: 70ch
+      )
+    )
+  )
+);
+
 html {
     overflow-y: scroll;
 }
@@ -69,4 +102,91 @@ a /*.feather*/ {
         stroke: $github-black;
         fill: $github-black;
     }
+}
+
+.main-header {
+    background-color: var(--vp-ivory);
+    border-bottom: 1px solid var(--vp-navy);
+
+    .navbar-brand {
+        font-family: $headings-font-family;
+        font-size: 3rem;
+    }
+
+    a, a:active, a:focus, a:visited {
+        color: var(--bs-dark);
+        
+        &:hover {
+            color: var(--bs-primary);
+        }
+    }
+
+    .nav-link {
+        font-size: 1.375rem;
+    }
+}
+
+.prose{
+  max-inline-size: var(--measure);
+  margin-inline: auto;
+  line-height: var(--leading-web);
+  text-wrap: pretty;
+  hyphens: manual;
+  overflow-wrap: break-word;
+  font-kerning: normal;
+  container-type: inline-size;
+}
+
+.prose p + p {
+    text-indent: var(--indent);
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.prose p {
+    text-indent: 0;
+    margin-bottom: 0;
+}
+
+.prose h1 {
+    text-wrap: balance;;
+}
+
+.prose h2, .prose h3,
+.prose h4, .prose h5, .prose h6 {
+    font-size: var(--bs-font-size);
+    font-family: var(--bs-font-sans-serif);
+    margin: 2rem 0 0 0;
+    padding: 0;
+    font-weight: 700;
+}
+
+.prose img {
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 36rem) {
+    .prose{ 
+        max-inline-size: var(--measure-narrow); 
+        line-height: var(--leading-narrow);
+    }
+
+    .prose p, .prose p + p {
+        text-indent: 0;
+    }
+}
+
+@container (inline-size > 95ch) {
+  .prose.prose--cols {
+        column-width: var(--col-width); 
+        column-gap: var(--col-gap); 
+        column-fill: balance; 
+        line-height: var(--leading-cols);
+    }
+}
+
+.display-2 {
+    font-size: 2.5rem;
+    font-weight: 400;
 }

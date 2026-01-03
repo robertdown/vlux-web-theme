@@ -1,0 +1,11 @@
+{{- $src := "" -}}
+{{- $alt := .Title -}}
+{{- with .Resources.GetMatch "cover*" -}}
+    {{- $src = .RelPermalink -}}
+{{- else -}}
+    {{- if isset .Params "image" -}}
+        {{- $src = .Params.image.src -}}
+        {{- $alt = .Params.image.alt | default .Title -}}
+    {{- end -}}
+{{- end -}}
+<img src="{{ $src }}" alt="{{ $alt }}" style="max-width:18rem;" class="card-img-top" loading="lazy">

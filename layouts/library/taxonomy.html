@@ -1,0 +1,14 @@
+{{ define "main" }}
+  <h1>{{ .Title }}</h1>
+  {{ .Content }}
+
+  {{/* .Data.Terms is populated on taxonomy index pages */}}
+  <ul>
+    {{ range .Data.Terms.Alphabetical }}
+      <li>
+        <a href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a>
+        <span class="text-muted">({{ len .Pages }})</span>
+      </li>
+    {{ end }}
+  </ul>
+{{ end }}

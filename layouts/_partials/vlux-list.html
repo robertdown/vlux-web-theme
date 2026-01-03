@@ -1,0 +1,55 @@
+{{/* --- Read options (dict is the . inside the partial) --- */}}
+{{- $section := .section | default "books" -}}
+{{- $filters := .filters | default dict -}}
+{{- $sortKey := .sort | default "Title" -}}
+{{- $order := .order | default "asc" -}}
+{{- $limit := .limit -}}
+
+{{/* --- Start from the section, independent of caller context --- */}}
+{{- $src := site.GetPage "section" $section -}}
+{{- $pages := cond (not $src) (slice) $src.RegularPages -}} {{/* leaf bundles only */}}
+
+{{/* --- Apply optional filters --- */}}
+{{ with index $filters "featured" }}
+  {{- $pages = where $pages ".Params.featured" . -}}
+{{ end }}
+
+{{ with index $filters "tags" }}
+  {{- $pages = where $pages "Params.tags" "intersect" . -}}
+{{ end }}
+
+{{ with index $filters "type" }}
+  {{- $pages = where $pages ".Params.type" . -}}
+{{ end }}
+
+{{ with index $filters "sectionOnly" }} {{/* true => only immediate children */}}
+  {{- if . -}}
+    {{- $pages = $src.Pages -}}
+  {{- end -}}
+{{ end }}
+
+{{/* --- Sort & limit --- */}}
+{{- $pages = sort $pages $sortKey $order -}}
+{{- if $limit }}{{ $pages = first $limit $pages }}{{ end -}}
+
+{{/* --- Render --- */}}
+<div class="books d-flex flex-wrap gap-3">
+    {{ range $pages }}
+        <div class="card h-100" style="width: 18rem;">
+            {{ with .Params.image }}
+                <img src="{{ . }}" class="card-img-top" alt="{{ $.Title }}">
+            {{ else }}
+                {{ with .Resources.GetMatch "cover*" }}
+                    <img src="{{ .RelPermalink }}" class="card-img-top" alt="{{ $.Title }}">
+                {{ end }}
+            {{ end }}
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="{{ .RelPermalink }}" class="stretched-link text-decoration-none">{{ .Title }}</a>
+                </h5>
+                {{ with .Params.subtitle }}<h6 class="card-subtitle mb-2 text-muted">{{ . }}</h6>{{ end }}
+                {{ with .Summary }}<p class="card-text">{{ . | safeHTML }}</p>{{ else }}{{ with .Params.description }}<p class="card-text">{{ . }}</p>{{ end }}{{ end }}
+            </div>
+        </div>
+    {{ end }}
+</div>

@@ -1,0 +1,57 @@
+{{/* vlux-book-card.html - renders a list of book page objects or data items
+   Expects a dict with key "items" (slice) or pass a single page via . */}}
+{{ $items := .items }}
+{{ if not $items }}
+  <div class="col-12">
+    <div class="alert alert-secondary" role="status">Add books in <code>content/books/</code> or <code>data/books.*</code> to populate this section.</div>
+  </div>
+{{ else }}
+  {{ range first 8 $items }}
+    <div class="col-6 col-md-4 col-lg-3">
+      <article class="card h-100 border-0 shadow-sm">
+        {{ if .RelPermalink }}
+          {{ $title := .Title }}
+          {{ $href := .RelPermalink }}
+          {{ $cover := .Params.cover }}
+          {{ if $cover }}
+            {{ with $cover.src }}
+              <img src="{{ . }}" class="card-img-top" alt="{{ $cover.alt | default $title }}">
+            {{ else }}
+              <img src="{{ $cover }}" class="card-img-top" alt="{{ $title }}">
+            {{ end }}
+          {{ end }}
+          <div class="card-body d-flex flex-column">
+            <h3 class="h6 card-title mb-1"><a class="stretched-link text-decoration-none" href="{{ $href }}">{{ $title }}</a></h3>
+            {{ with .Params.subtitle }}<p class="card-subtitle text-muted">{{ . }}</p>{{ end }}
+            {{ with .Params.author }}<p class="small text-muted mt-2">{{ . }}</p>{{ end }}
+            {{ with .Params.price }}<div class="mt-auto fw-semibold">{{ . }}</div>{{ end }}
+          </div>
+        {{ else }}
+          {{ $data := . }}
+          {{ with $data.cover }}
+            {{ $c := . }}
+            {{ with $c.src }}
+              <img src="{{ . }}" class="card-img-top" alt="{{ $c.alt | default ($data.title | default "Book cover") }}">
+            {{ else }}
+              <img src="{{ $c }}" class="card-img-top" alt="{{ $data.title | default "Book cover" }}">
+            {{ end }}
+          {{ else }}
+            {{ if $data.image }}
+              {{ with $data.image.src }}
+                <img src="{{ . }}" class="card-img-top" alt="{{ $data.image.alt | default ($data.title | default "Book cover") }}">
+              {{ else }}
+                <img src="{{ $data.image }}" class="card-img-top" alt="{{ $data.title | default "Book cover" }}">
+              {{ end }}
+            {{ end }}
+          {{ end }}
+          <div class="card-body d-flex flex-column">
+            <h3 class="h6 card-title mb-1"><a class="stretched-link text-decoration-none" href="{{ $data.url | default "#" }}">{{ $data.title }}</a></h3>
+            {{ with $data.subtitle }}<p class="card-subtitle text-muted">{{ . }}</p>{{ end }}
+            {{ with $data.author }}<p class="small text-muted mt-2">{{ . }}</p>{{ end }}
+            {{ with $data.price }}<div class="mt-auto fw-semibold">{{ . }}</div>{{ end }}
+          </div>
+        {{ end }}
+      </article>
+    </div>
+  {{ end }}
+{{ end }}

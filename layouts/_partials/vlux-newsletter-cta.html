@@ -1,0 +1,16 @@
+{{/* vlux-newsletter-cta.html */}}
+<aside class="card border-0 shadow-sm">
+  <h3 class="card-title">Scholarly Updates</h3>
+  <div class="card-body">
+    <p class="small text-muted">New releases, editorial notes, and event announcements. Low‑volume, high‑signal.</p>
+    <form method="post" action="{{ with .Site.Params.newsletter_action }}{{ . }}{{ else }}/newsletter/subscribe{{ end }}" class="d-flex">
+      <div >
+        <label class="form-label visually-hidden" for="nl-email">Email</label>
+        <input id="nl-email" name="email" type="email" class="form-control p-3" placeholder="you@example.com" required>
+      </div>
+      <div>
+        <button class="btn btn-dark" type="submit">Subscribe</button>
+      </div>
+    </form>
+  </div>
+</aside>

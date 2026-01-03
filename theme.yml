@@ -1,0 +1,29 @@
+name: "Verilux Web Theme"
+license: "MIT"
+licenselink: "https://github.com/robertdown/vlux-web-theme/blob/main/LICENSE"
+description: "Theme for a blazing fast static website and/or blog using bootstrap 5."
+
+homepage: "https://github.com/robertdown/vlux-web-theme"
+demosite: "https://robertdown.github.io/vlux-web-theme/"
+
+tags:
+  - "bootstrap"
+  - "minimal"
+  - "responsive"
+  - "modern"
+  - "blog"
+  - "landing page"
+
+features:
+  - "security aware"
+  - "fast by default"
+  - "seo-ready"
+  - "bootstrap framework"
+  - "bootstrap 5"
+  - "bootstrap 5.3"
+
+min_version: "0.123.0"
+
+author:
+  name: "Robert Down"
+  homepage: "https://github.com/robertdown"
